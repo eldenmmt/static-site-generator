@@ -1,5 +1,5 @@
 import unittest
-from block_markdown import markdown_to_blocks, BlockType, block_to_block_type
+from block_markdown import markdown_to_blocks, BlockType, block_to_block_type, markdown_to_html_node
 
 class TestBlockMarkdown(unittest.TestCase):
     def test_markdown_to_blocks(self):
@@ -58,3 +58,37 @@ This is the same paragraph on a new line
 
         # Test Paragraph normal
         self.assertEqual(block_to_block_type("This is just a paragraph"), BlockType.PARAGRAPH)
+
+class TestMarkdownToHTML(unittest.TestCase):
+    def test_paragraph(self):
+        markdown = "Este é um parágrafo simples."
+        node = markdown_to_html_node(markdown)
+        html = node.to_html()
+        self.assertEqual(html, "<div><p>Este é um parágrafo simples.</p></div>")
+
+    def test_heading(self):
+        markdown = "# Título Principal\n\n### Subtítulo"
+        node = markdown_to_html_node(markdown)
+        html = node.to_html()
+        self.assertEqual(
+            html, 
+            "<div><h1>Título Principal</h1><h3>Subtítulo</h3></div>"
+        )
+
+    def test_lists(self):
+        markdown = "- Item 1\n- Item 2"
+        node = markdown_to_html_node(markdown)
+        html = node.to_html()
+        self.assertEqual(
+            html, 
+            "<div><ul><li>Item 1</li><li>Item 2</li></ul></div>"
+        )
+
+    def test_paragraphs_with_inline_markdown(self):
+        markdown = "Este é um texto com **negrito** e _itálico_."
+        node = markdown_to_html_node(markdown)
+        html = node.to_html()
+        self.assertEqual(
+            html, 
+            "<div><p>Este é um texto com <b>negrito</b> e <i>itálico</i>.</p></div>"
+        )
