@@ -161,3 +161,15 @@ def markdown_to_html_node(markdown):
             
         block_nodes.append(node)
     return ParentNode("div", block_nodes)
+
+def extract_title(markdown):
+    lines = markdown.split("\n")
+
+    for line in lines:
+        stripped_line = line.strip()
+
+        if stripped_line.startswith("# "):
+            parts = stripped_line.split(" ", 1)
+            return parts[1].strip()
+    
+    raise Exception("H1 title not found")
