@@ -1,10 +1,11 @@
 import os
 import shutil
 from copystatic import copy_files_recursive
-from generate_page import generate_page
+from generate_page import generate_page, generate_pages_recursive
 
 SOURCE_DIR = "static"
 DEST_DIR = "public"
+CONTENT_DIR = "content"
 
 FROM_PATH = "content/index.md"
 TEMPLATE_PATH = "template.html"
@@ -20,7 +21,7 @@ def main():
     print(f"Copying static files from {SOURCE_DIR}/ to {DEST_DIR}/...")
     copy_files_recursive(SOURCE_DIR, DEST_DIR)
 
-    generate_page(FROM_PATH, TEMPLATE_PATH, DEST_HTML_PATH)
+    generate_pages_recursive(CONTENT_DIR, TEMPLATE_PATH, DEST_DIR)
 
     print("Build completed successfuly!")
     
