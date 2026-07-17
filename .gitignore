@@ -1,7 +1,5 @@
-# Ignorar a pasta de saída do build (gerada automaticamente)
 public/
 
-# Ignorar o ambiente virtual do Python (se usares)
 .venv/
 venv/
 __pycache__/
